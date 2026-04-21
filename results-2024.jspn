@@ -1,0 +1,23 @@
+[
+  {
+    "journal": "IEEE TSE",
+    "journal_name": "IEEE Transactions on Software Engineering",
+    "papers_in_window": 423,
+    "citations_in_2024": 2741,
+    "impact_factor_2024": 6.4799
+  },
+  {
+    "journal": "ACM TOSEM",
+    "journal_name": "ACM Transactions on Software Engineering and Methodology",
+    "papers_in_window": 355,
+    "citations_in_2024": 3048,
+    "impact_factor_2024": 8.5859
+  },
+  {
+    "journal": "Springer EMSE",
+    "journal_name": "Empirical Software Engineering",
+    "papers_in_window": 354,
+    "citations_in_2024": 1477,
+    "impact_factor_2024": 4.1723
+  }
+]
