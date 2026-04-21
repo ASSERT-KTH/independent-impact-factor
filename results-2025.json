@@ -1,0 +1,38 @@
+[
+  {
+    "journal": "IEEE TSE",
+    "journal_name": "IEEE Transactions on Software Engineering",
+    "citation_year": 2025,
+    "publication_years": [
+      2023,
+      2024
+    ],
+    "papers_in_window": 421,
+    "citations_in_year": 3598,
+    "impact_factor": 8.5463
+  },
+  {
+    "journal": "ACM TOSEM",
+    "journal_name": "ACM Transactions on Software Engineering and Methodology",
+    "citation_year": 2025,
+    "publication_years": [
+      2023,
+      2024
+    ],
+    "papers_in_window": 522,
+    "citations_in_year": 6165,
+    "impact_factor": 11.8103
+  },
+  {
+    "journal": "Springer EMSE",
+    "journal_name": "Empirical Software Engineering",
+    "citation_year": 2025,
+    "publication_years": [
+      2023,
+      2024
+    ],
+    "papers_in_window": 331,
+    "citations_in_year": 1653,
+    "impact_factor": 4.994
+  }
+]
