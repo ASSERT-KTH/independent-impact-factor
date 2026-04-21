@@ -124,38 +124,37 @@ def _venue_match(paper: dict, venue_names: list[str]) -> bool:
 def fetch_papers(journal_key: str, year: int, api_key: Optional[str] = None) -> list[dict]:
     """
     Fetch all papers published in *journal_key* during *year* using the
-    Semantic Scholar paper-search endpoint.  Results are filtered to keep
+    Semantic Scholar bulk paper-search endpoint. Results are filtered to keep
     only papers whose recorded venue matches the journal.
     """
     venue_names = JOURNALS[journal_key]["venue_names"]
-    primary_name = JOURNALS[journal_key]["display"]
     papers: list[dict] = []
-    offset = 0
-    limit = 100
+    token: Optional[str] = None
+    limit = 1000
 
     print(f"    Fetching {journal_key} papers for {year} …", flush=True)
 
     while True:
         params = {
-            "query": primary_name,
             "fields": "paperId,title,year,venue,publicationVenue",
+            "venue": ",".join(venue_names),
             "year": str(year),
-            "offset": offset,
             "limit": limit,
         }
-        data = _get(f"{API_BASE}/paper/search", params, api_key)
+        if token:
+            params["token"] = token
+
+        data = _get(f"{API_BASE}/paper/search/bulk", params, api_key)
 
         batch = data.get("data") or []
         for paper in batch:
             if paper.get("year") == year and _venue_match(paper, venue_names):
                 papers.append(paper)
 
-        total = data.get("total", 0)
-        fetched_so_far = offset + len(batch)
-        if fetched_so_far >= total or not batch:
+        token = data.get("token")
+        if not batch or not token:
             break
 
-        offset += limit
         time.sleep(1)  # be a good citizen
 
     print(f"      → {len(papers)} papers matched", flush=True)
