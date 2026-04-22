@@ -1,9 +1,13 @@
 # Independent Impact Factor for CS Journals
 
+Our research systems — funding allocation, hiring decisions, tenure evaluation, venue rankings — must not be steered by proprietary data, closed algorithms, or opaque commercial products. When the metrics that shape academic careers and institutional priorities are locked behind paywalls or black boxes, the scientific community loses the ability to scrutinize, reproduce, or challenge them. This repository exists as a principled alternative: all data sources, computation logic, and results are fully open and reproducible.
+
 Computes an independent impact factor for a journal using
 the [Semantic Scholar](https://www.semanticscholar.org/) API.
 
-**Key differences from the official JCR impact factor:** 
+See the [Software Engineering results](if-se.md) for the current numbers.
+
+**Key differences from the official JCR impact factor**: 
 
 - The code and data is transparent
 - citations from *conference papers* are included (not just journal-to-journal citations), giving a more complete picture of how widely the research is actually cited in the CS community.
