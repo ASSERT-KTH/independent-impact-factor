@@ -1,0 +1,44 @@
+{
+  "IEEE TSE": {
+    "display": "IEEE Transactions on Software Engineering",
+    "venue_names": [
+      "IEEE Transactions on Software Engineering",
+      "IEEE Trans. Software Eng.",
+      "IEEE Trans. Softw. Eng."
+    ]
+  },
+  "ACM TOSEM": {
+    "display": "ACM Transactions on Software Engineering and Methodology",
+    "venue_names": [
+      "ACM Transactions on Software Engineering and Methodology",
+      "ACM Trans. Softw. Eng. Methodol.",
+      "ACM Trans. Software Eng. Methodol.",
+      "TOSEM"
+    ]
+  },
+  "Springer EMSE": {
+    "display": "Empirical Software Engineering",
+    "venue_names": [
+      "Empirical Software Engineering",
+      "Empir. Software Eng.",
+      "Empir. Softw. Eng."
+    ]
+  },
+  "JSS": {
+    "display": "Journal of Systems and Software",
+    "venue_names": [
+      "Journal of Systems and Software",
+      "J. Syst. Softw.",
+      "J Syst Softw"
+    ]
+  },
+  "IST": {
+    "display": "Information and Software Technology",
+    "venue_names": [
+      "Information and Software Technology",
+      "Information & Software Technology",
+      "Inf. Softw. Technol.",
+      "Inf Software Technol"
+    ]
+  }
+}

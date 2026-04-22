@@ -1,0 +1,188 @@
+{
+  "2023": [
+    {
+      "journal": "IEEE TSE",
+      "journal_name": "IEEE Transactions on Software Engineering",
+      "citation_year": 2023,
+      "publication_years": [
+        2021,
+        2022
+      ],
+      "papers_in_window": 349,
+      "citations_in_year": 2221,
+      "impact_factor": 6.3639
+    },
+    {
+      "journal": "ACM TOSEM",
+      "journal_name": "ACM Transactions on Software Engineering and Methodology",
+      "citation_year": 2023,
+      "publication_years": [
+        2021,
+        2022
+      ],
+      "papers_in_window": 253,
+      "citations_in_year": 1570,
+      "impact_factor": 6.2055
+    },
+    {
+      "journal": "Springer EMSE",
+      "journal_name": "Empirical Software Engineering",
+      "citation_year": 2023,
+      "publication_years": [
+        2021,
+        2022
+      ],
+      "papers_in_window": 381,
+      "citations_in_year": 1586,
+      "impact_factor": 4.1627
+    },
+    {
+      "journal": "JSS",
+      "journal_name": "Journal of Systems and Software",
+      "citation_year": 2023,
+      "publication_years": [
+        2021,
+        2022
+      ],
+      "papers_in_window": 428,
+      "citations_in_year": 2223,
+      "impact_factor": 5.1939
+    },
+    {
+      "journal": "IST",
+      "journal_name": "Information and Software Technology",
+      "citation_year": 2023,
+      "publication_years": [
+        2021,
+        2022
+      ],
+      "papers_in_window": 479,
+      "citations_in_year": 1890,
+      "impact_factor": 3.9457
+    }
+  ],
+  "2024": [
+    {
+      "journal": "IEEE TSE",
+      "journal_name": "IEEE Transactions on Software Engineering",
+      "citation_year": 2024,
+      "publication_years": [
+        2022,
+        2023
+      ],
+      "papers_in_window": 423,
+      "citations_in_year": 2741,
+      "impact_factor": 6.4799
+    },
+    {
+      "journal": "ACM TOSEM",
+      "journal_name": "ACM Transactions on Software Engineering and Methodology",
+      "citation_year": 2024,
+      "publication_years": [
+        2022,
+        2023
+      ],
+      "papers_in_window": 355,
+      "citations_in_year": 3048,
+      "impact_factor": 8.5859
+    },
+    {
+      "journal": "Springer EMSE",
+      "journal_name": "Empirical Software Engineering",
+      "citation_year": 2024,
+      "publication_years": [
+        2022,
+        2023
+      ],
+      "papers_in_window": 354,
+      "citations_in_year": 1477,
+      "impact_factor": 4.1723
+    },
+    {
+      "journal": "JSS",
+      "journal_name": "Journal of Systems and Software",
+      "citation_year": 2024,
+      "publication_years": [
+        2022,
+        2023
+      ],
+      "papers_in_window": 444,
+      "citations_in_year": 2350,
+      "impact_factor": 5.2928
+    },
+    {
+      "journal": "IST",
+      "journal_name": "Information and Software Technology",
+      "citation_year": 2024,
+      "publication_years": [
+        2022,
+        2023
+      ],
+      "papers_in_window": 386,
+      "citations_in_year": 2010,
+      "impact_factor": 5.2073
+    }
+  ],
+  "2025": [
+    {
+      "journal": "IEEE TSE",
+      "journal_name": "IEEE Transactions on Software Engineering",
+      "citation_year": 2025,
+      "publication_years": [
+        2023,
+        2024
+      ],
+      "papers_in_window": 421,
+      "citations_in_year": 3598,
+      "impact_factor": 8.5463
+    },
+    {
+      "journal": "ACM TOSEM",
+      "journal_name": "ACM Transactions on Software Engineering and Methodology",
+      "citation_year": 2025,
+      "publication_years": [
+        2023,
+        2024
+      ],
+      "papers_in_window": 522,
+      "citations_in_year": 6168,
+      "impact_factor": 11.8161
+    },
+    {
+      "journal": "Springer EMSE",
+      "journal_name": "Empirical Software Engineering",
+      "citation_year": 2025,
+      "publication_years": [
+        2023,
+        2024
+      ],
+      "papers_in_window": 331,
+      "citations_in_year": 1652,
+      "impact_factor": 4.9909
+    },
+    {
+      "journal": "JSS",
+      "journal_name": "Journal of Systems and Software",
+      "citation_year": 2025,
+      "publication_years": [
+        2023,
+        2024
+      ],
+      "papers_in_window": 521,
+      "citations_in_year": 2462,
+      "impact_factor": 4.7255
+    },
+    {
+      "journal": "IST",
+      "journal_name": "Information and Software Technology",
+      "citation_year": 2025,
+      "publication_years": [
+        2023,
+        2024
+      ],
+      "papers_in_window": 400,
+      "citations_in_year": 2219,
+      "impact_factor": 5.5475
+    }
+  ]
+}

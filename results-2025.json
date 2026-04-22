@@ -34,5 +34,29 @@
     "papers_in_window": 331,
     "citations_in_year": 1653,
     "impact_factor": 4.994
+  },
+  {
+    "journal": "JSS",
+    "journal_name": "Journal of Systems and Software",
+    "citation_year": 2025,
+    "publication_years": [
+      2023,
+      2024
+    ],
+    "papers_in_window": 521,
+    "citations_in_year": 2462,
+    "impact_factor": 4.7255
+  },
+  {
+    "journal": "IST",
+    "journal_name": "Information and Software Technology",
+    "citation_year": 2025,
+    "publication_years": [
+      2023,
+      2024
+    ],
+    "papers_in_window": 400,
+    "citations_in_year": 2219,
+    "impact_factor": 5.5475
   }
 ]
