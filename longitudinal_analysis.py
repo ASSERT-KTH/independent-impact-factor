@@ -139,6 +139,39 @@ def plot(rows: list[dict], path: str) -> None:
     print(f"Chart saved to {path}")
 
 
+PAPERS_PNG_PATH = "longitudinal_tse_tosem_papers.png"
+
+
+def plot_papers(rows: list[dict], path: str) -> None:
+    colors = {"IEEE TSE": "#1f77b4", "ACM TOSEM": "#ff7f0e"}
+    # paper count is mode-independent; use wos_replica rows to avoid duplicates
+    data: dict[str, dict[int, int]] = {}
+    for row in rows:
+        if row["mode"] != "wos_replica":
+            continue
+        j = row["journal"]
+        if j not in data:
+            data[j] = {}
+        data[j][int(row["citation_year"])] = int(row["papers_in_window"])
+
+    fig, ax = plt.subplots(figsize=(9, 4))
+    for journal, yearly in data.items():
+        xs = sorted(yearly)
+        ys = [yearly[x] for x in xs]
+        ax.plot(xs, ys, label=journal, color=colors[journal], marker="o", linewidth=2)
+
+    ax.set_xlabel("Citation year")
+    ax.set_ylabel("Papers in 2-year window")
+    ax.set_title("Papers published in the 2-year citation window\n(IEEE TSE and ACM TOSEM, 2021–2025)")
+    ax.xaxis.set_major_locator(ticker.MultipleLocator(1))
+    ax.legend(loc="upper left", fontsize=9)
+    ax.grid(True, linestyle=":", alpha=0.5)
+    fig.tight_layout()
+    fig.savefig(path, dpi=150)
+    plt.close(fig)
+    print(f"Chart saved to {path}")
+
+
 def load_existing_csv(path: str) -> list[dict]:
     with open(path, newline="", encoding="utf-8") as fh:
         reader = csv.DictReader(fh)
@@ -178,6 +211,7 @@ def main() -> None:
         write_csv(rows, CSV_PATH)
 
     plot(rows, PNG_PATH)
+    plot_papers(rows, PAPERS_PNG_PATH)
 
 
 if __name__ == "__main__":
