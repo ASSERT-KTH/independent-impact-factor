@@ -1,2 +1,7 @@
 # created by virtualenv automatically
 __pycache__
+.semanticscholar-cache.sqlite3
+CACHEDIR.TAG
+bin/
+lib/
+pyvenv.cfg

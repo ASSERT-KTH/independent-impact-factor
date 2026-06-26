@@ -1,13 +1,14 @@
-# Independent Impact Factor Summary
+# Independent Impact Factor 2025
 
 - Data source: Semantic Scholar API
-- Citation years: 2023, 2024, 2025
-- Formula: each IF_Y uses citations in Y to papers published in Y-2 and Y-1
+- Publication window: 2023-2024
+- Citation year: 2025
+- Formula: citations_2025 / papers_2023_2024
 
-| Journal | IF 2023 | IF 2024 | IF 2025 |
+| Journal | Papers (2023-2024) | Citations (2025) | IF 2025 |
 | --- | ---: | ---: | ---: |
-| IEEE TSE | 6.3639 | 6.4799 | 8.5463 |
-| ACM TOSEM | 6.2055 | 8.5859 | 11.8161 |
-| Springer EMSE | 4.1627 | 4.1723 | 4.9909 |
-| JSS | 5.1939 | 5.2928 | 4.7255 |
-| IST | 3.9457 | 5.2073 | 5.5475 |
+| IEEE TSE | 421 | 3598 | 8.5463 |
+| ACM TOSEM | 522 | 6168 | 11.8161 |
+| Springer EMSE | 331 | 1652 | 4.9909 |
+| JSS | 521 | 2462 | 4.7255 |
+| IST | 400 | 2219 | 5.5475 |

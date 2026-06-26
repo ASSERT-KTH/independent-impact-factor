@@ -7,10 +7,13 @@ the [Semantic Scholar](https://www.semanticscholar.org/) API.
 
 See the [Software Engineering results](if-se.md) for the current numbers.
 
-**Key differences from the official JCR impact factor**: 
+This repository addresses two independent improvements over the official JCR/WoS impact factor:
 
-- The code and data is transparent
-- citations from *conference papers* are included (not just journal-to-journal citations), giving a more complete picture of how widely the research is actually cited in the CS community.
+1. **Recompute outside WoS** (`wos_replica` mode): replace the proprietary Web of Science database with the open Semantic Scholar API, keeping the same JCR methodology (journal-to-journal citations only). This makes the computation fully reproducible and auditable.
+
+2. **Broader citation base** (`extended` mode, the default): in addition to using Semantic Scholar, count citations from *all* paper types — including conference papers. In CS, a large fraction of influential work appears at conferences, so the journal-only restriction systematically understates real-world impact. This is the primary "independent IF" metric.
+
+These two dimensions are kept separate in both the code (`--mode` flag) and the results so each contribution can be evaluated independently.
 
 ## Journals covered
 
@@ -43,32 +46,45 @@ pip install -r requirements.txt
 
 ## Usage
 
+### Single-year / multi-year computation (`compute_impact_factor.py`)
+
 The list of journals is defined in a JSON file (e.g. `se.json`).
 Output filenames are derived from that file's stem.
 
 ```bash
-# Run for all journals in se.json for citation year 2024
+# Extended mode (default) — all citations including conferences
 python compute_impact_factor.py --journals-file se.json 2024
 
-# Run a combined summary for citation years 2023, 2024, and 2025
+# WoS-replica mode — journal-to-journal citations only
+python compute_impact_factor.py --journals-file se.json 2024 --mode wos_replica
+
+# All years (2023–2025) combined summary
 python compute_impact_factor.py --journals-file se.json --all
 
 # With a Semantic Scholar API key (higher rate limits)
 python compute_impact_factor.py --journals-file se.json 2024 --api-key YOUR_KEY
 
-# Run for a subset of journals from the file
+# Subset of journals
 python compute_impact_factor.py --journals-file se.json 2024 --journals "IEEE TSE"
 ```
 
-Results are printed as a summary table and written to:
+Results are written to `if-{stem}.md` (Markdown) and `results-{stem}.json`.
 
-- `if-{stem}.md` for the Markdown summary
-- `results-{stem}.json` for the structured data
+### Longitudinal comparison (`longitudinal_analysis.py`)
 
-For example, `python compute_impact_factor.py --journals-file se.json 2024` writes
-`if-se.md` and `results-se.json`.
+Computes both modes for TSE and TOSEM over citation years 2021–2025 and
+produces a CSV and a line chart comparing WoS-replica vs Extended IFs.
 
-With `--all`, the same filenames are used but the content covers all years.
+```bash
+python longitudinal_analysis.py [--api-key YOUR_KEY]
+
+# Regenerate the chart from an existing CSV without API calls
+python longitudinal_analysis.py --plot-only
+```
+
+Outputs:
+- `longitudinal_tse_tosem.csv` — 20 rows (2 journals × 5 years × 2 modes)
+- `longitudinal_tse_tosem.png` — line chart with 4 series
 
 ## Notes
 

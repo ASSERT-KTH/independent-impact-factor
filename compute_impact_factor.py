@@ -3,11 +3,25 @@
 Compute an independent impact factor for CS journals using the Semantic
 Scholar API.
 
-Unlike the official JCR impact factor, this computation:
-  - Uses Semantic Scholar as data source (broader coverage than Web of Science)
-  - Includes citations from conference papers (not only journal-to-journal)
+Two computation modes are supported, addressing two distinct improvements over
+the official JCR impact factor:
 
-For a given citation year Y, the formula follows the same 2-year window as JCR:
+  **wos_replica** — "recompute outside WoS"
+    Uses Semantic Scholar as the data source instead of Web of Science.
+    The paper base is journal articles only, and only journal-to-journal
+    citations are counted, matching JCR/Clarivate methodology exactly.
+    This mode shows what the IF would look like with fully open, reproducible
+    data while keeping the same algorithmic rules as Clarivate.
+
+  **extended** — "improved with a broader citation base"
+    Same paper base (journal articles in the two-year window) and same
+    Semantic Scholar data source, but citations from *all* paper types are
+    counted — including conference papers.  In CS, a large fraction of
+    influential work appears at conferences, so restricting to
+    journal-to-journal citations systematically understates actual impact.
+    This is the default mode and the primary "independent IF" metric.
+
+For a given citation year Y, both modes use the same two-year window as JCR:
     IF_Y = citations_in_Y_to_papers_published_in_(Y-2)_or_(Y-1)
            -----------------------------------------------------
            number_of_papers_published_in_(Y-2)_or_(Y-1)
@@ -25,6 +39,12 @@ from pathlib import Path
 from typing import Optional
 
 import requests
+
+try:
+    import keyring as _keyring
+    _SS_API_KEY: Optional[str] = _keyring.get_password("login2", "semanticscholar_key")
+except Exception:
+    _SS_API_KEY = None
 
 # ---------------------------------------------------------------------------
 # Configuration
@@ -227,20 +247,28 @@ def fetch_papers(
 def count_citations_in_year(
     paper_id: str,
     target_year: int,
+    journal_only: bool = False,
     api_key: Optional[str] = None,
     cache: Optional[RequestCache] = None,
 ) -> int:
     """
     Return the number of papers that cite *paper_id* and were published in
-    *target_year*.  This includes citations from conference papers.
+    *target_year*.
+
+    When *journal_only* is True (wos_replica mode) only citations from papers
+    whose ``publicationTypes`` includes ``"JournalArticle"`` are counted,
+    mirroring the journal-to-journal restriction of WoS/JCR.  When False
+    (extended mode) citations from all paper types — including conference
+    papers — are counted.
     """
     count = 0
     offset = 0
     limit = 1000
+    fields = "year,publicationTypes" if journal_only else "year"
 
     while True:
         params = {
-            "fields": "year",
+            "fields": fields,
             "offset": offset,
             "limit": limit,
         }
@@ -249,8 +277,13 @@ def count_citations_in_year(
         batch = data.get("data") or []
         for item in batch:
             citing = item.get("citingPaper") or {}
-            if citing.get("year") == target_year:
-                count += 1
+            if citing.get("year") != target_year:
+                continue
+            if journal_only:
+                pub_types = citing.get("publicationTypes") or []
+                if "JournalArticle" not in pub_types:
+                    continue
+            count += 1
 
         if len(batch) < limit:
             break
@@ -273,10 +306,17 @@ def compute_impact_factor(
     journal_key: str,
     citation_year: int,
     journals: dict[str, dict],
+    journal_only: bool = False,
     api_key: Optional[str] = None,
     cache: Optional[RequestCache] = None,
 ) -> dict:
-    """Compute the impact factor for *journal_key* in *citation_year*."""
+    """Compute the impact factor for *journal_key* in *citation_year*.
+
+    *journal_only=False* (default, "extended" mode): count citations from all
+    paper types including conferences.
+    *journal_only=True* ("wos_replica" mode): count only journal-to-journal
+    citations, approximating JCR/WoS methodology with Semantic Scholar data.
+    """
     display = journals[journal_key]["display"]
     pub_years = publication_years(citation_year)
     print(f"\n{'=' * 68}")
@@ -313,15 +353,15 @@ def compute_impact_factor(
             "impact_factor": None,
         }
 
-    # Step 2: count citations from citation_year to each paper
-    print(f"\n  Counting citations in {citation_year} (including conferences) …", flush=True)
+    mode_label = "journal-only" if journal_only else "all types (incl. conferences)"
+    print(f"\n  Counting citations in {citation_year} ({mode_label}) …", flush=True)
     total_citations = 0
 
     for i, paper in enumerate(unique_papers, start=1):
         pid = paper["paperId"]
         title_snippet = (paper.get("title") or "")[:60]
         print(f"    [{i}/{n_papers}] {title_snippet} …", end=" ", flush=True)
-        cits = count_citations_in_year(pid, citation_year, api_key, cache)
+        cits = count_citations_in_year(pid, citation_year, journal_only, api_key, cache)
         print(cits, flush=True)
         total_citations += cits
 
@@ -332,6 +372,7 @@ def compute_impact_factor(
         "journal_name": display,
         "citation_year": citation_year,
         "publication_years": pub_years,
+        "mode": "wos_replica" if journal_only else "extended",
         "papers_in_window": n_papers,
         "citations_in_year": total_citations,
         "impact_factor": impact_factor,
@@ -444,21 +485,25 @@ def compute_year_results(
     citation_year: int,
     journal_keys: list[str],
     journals: dict[str, dict],
+    journal_only: bool = False,
     api_key: Optional[str] = None,
     cache: Optional[RequestCache] = None,
 ) -> list[dict]:
     """Compute impact factors for all selected journals in one citation year."""
     pub_years = publication_years(citation_year)
+    mode_label = "journal-only (wos_replica)" if journal_only else "all types incl. conferences (extended)"
 
     print(f"\nIndependent Impact Factor — {citation_year}")
     print("Data source : Semantic Scholar API")
     print(f"Window      : papers published in {pub_years[0]}-{pub_years[-1]}")
-    print(f"Citations   : all citing papers (journals + conferences) in {citation_year}")
+    print(f"Citations   : {mode_label}")
     print(f"Formula     : citations_{citation_year} / papers_{pub_years[0]}_{pub_years[-1]}")
 
     results: list[dict] = []
     for journal_key in journal_keys:
-        results.append(compute_impact_factor(journal_key, citation_year, journals, api_key, cache))
+        results.append(
+            compute_impact_factor(journal_key, citation_year, journals, journal_only, api_key, cache)
+        )
     return results
 
 
@@ -524,12 +569,27 @@ def main() -> None:
         "--api-key",
         metavar="KEY",
         default=None,
-        help="Semantic Scholar API key (optional but increases rate limits).",
+        help=(
+            "Semantic Scholar API key (increases rate limits). "
+            "Defaults to the value stored in the system keyring under "
+            "service='login2', username='semanticscholar_key'."
+        ),
     )
     parser.add_argument(
         "--all",
         action="store_true",
         help="Compute impact factors for 2023, 2024, and 2025 and write a combined summary.",
+    )
+    parser.add_argument(
+        "--mode",
+        choices=["extended", "wos_replica"],
+        default="extended",
+        help=(
+            "extended (default): count citations from all paper types, including "
+            "conference papers — the primary independent IF metric.  "
+            "wos_replica: count only journal-to-journal citations, approximating "
+            "JCR/WoS methodology with Semantic Scholar data."
+        ),
     )
     parser.add_argument(
         "--cache-path",
@@ -540,6 +600,8 @@ def main() -> None:
         ),
     )
     args = parser.parse_args()
+    if args.api_key is None:
+        args.api_key = _SS_API_KEY
     if args.all and args.year is not None:
         parser.error("year cannot be used together with --all")
     if not args.all and args.year is None:
@@ -558,20 +620,23 @@ def main() -> None:
         print(f"Using request cache: {args.cache_path}", flush=True)
         print(f"Journals file      : {args.journals_file} (prefix: {prefix})", flush=True)
 
+        journal_only = args.mode == "wos_replica"
+
         if args.all:
             results_by_year: dict[int, list[dict]] = {}
             for year in ALL_YEARS:
                 results_by_year[year] = compute_year_results(
-                    year, journal_keys, journals, args.api_key, cache
+                    year, journal_keys, journals, journal_only, args.api_key, cache
                 )
             print_all_years_summary(results_by_year)
             write_all_years_outputs(results_by_year, prefix)
             return
 
+        assert args.year is not None
         if args.year < 2:
             raise SystemExit("year must be at least 2")
 
-        results = compute_year_results(args.year, journal_keys, journals, args.api_key, cache)
+        results = compute_year_results(args.year, journal_keys, journals, journal_only, args.api_key, cache)
         print_summary(results, args.year)
         write_single_year_outputs(results, args.year, prefix)
     finally:
