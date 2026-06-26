@@ -1,29 +1,21 @@
 # Independent Impact Factor for CS Journals
 
-Our research systems — funding allocation, hiring decisions, tenure evaluation, venue rankings — must not be steered by proprietary data, closed algorithms, or opaque commercial products. When the metrics that shape academic careers and institutional priorities are locked behind paywalls or black boxes, the scientific community loses the ability to scrutinize, reproduce, or challenge them. This repository exists as a principled alternative: all data sources, computation logic, and results are fully open and reproducible.
-
 Computes an independent impact factor for a journal using
 the [Semantic Scholar](https://www.semanticscholar.org/) API.
 
+Our research systems — funding allocation, hiring decisions, tenure evaluation, venue rankings — must not be steered by proprietary data, closed algorithms, or opaque commercial products. When the metrics that shape academic careers and institutional priorities are locked behind paywalls or black boxes, the scientific community loses the ability to scrutinize, reproduce, or challenge them. This repository exists as a principled alternative: all data sources, computation logic, and results are fully open and reproducible.
+
 See the [Software Engineering results](if-se.md) for the current numbers.
 
-This repository addresses two independent improvements over the official JCR/WoS impact factor:
+## Methodology
+
+This code addresses two independent improvements over the official JCR/WoS impact factor:
 
 1. **Recompute outside WoS** (`wos_replica` mode): replace the proprietary Web of Science database with the open Semantic Scholar API, keeping the same JCR methodology (journal-to-journal citations only). This makes the computation fully reproducible and auditable.
 
 2. **Broader citation base** (`extended` mode, the default): in addition to using Semantic Scholar, count citations from *all* paper types — including conference papers. In CS, a large fraction of influential work appears at conferences, so the journal-only restriction systematically understates real-world impact. This is the primary "independent IF" metric.
 
 These two dimensions are kept separate in both the code (`--mode` flag) and the results so each contribution can be evaluated independently.
-
-## Journals covered
-
-| Key | Journal |
-|-----|---------|
-| `IEEE TSE` | IEEE Transactions on Software Engineering |
-| `ACM TOSEM` | ACM Transactions on Software Engineering and Methodology |
-| `Springer EMSE` | Empirical Software Engineering |
-| `JSS` | Journal of Systems and Software |
-| `IST` | Information and Software Technology |
 
 ## Formula
 
