@@ -7,9 +7,10 @@
       2023,
       2024
     ],
+    "mode": "wos_replica",
     "papers_in_window": 421,
-    "citations_in_year": 3598,
-    "impact_factor": 8.5463
+    "citations_in_year": 3277,
+    "impact_factor": 7.7838
   },
   {
     "journal": "ACM TOSEM",
@@ -19,9 +20,10 @@
       2023,
       2024
     ],
+    "mode": "wos_replica",
     "papers_in_window": 522,
-    "citations_in_year": 6168,
-    "impact_factor": 11.8161
+    "citations_in_year": 5563,
+    "impact_factor": 10.6571
   },
   {
     "journal": "Springer EMSE",
@@ -31,9 +33,10 @@
       2023,
       2024
     ],
+    "mode": "wos_replica",
     "papers_in_window": 331,
-    "citations_in_year": 1652,
-    "impact_factor": 4.9909
+    "citations_in_year": 1490,
+    "impact_factor": 4.5015
   },
   {
     "journal": "JSS",
@@ -43,9 +46,10 @@
       2023,
       2024
     ],
+    "mode": "wos_replica",
     "papers_in_window": 521,
-    "citations_in_year": 2462,
-    "impact_factor": 4.7255
+    "citations_in_year": 2205,
+    "impact_factor": 4.2322
   },
   {
     "journal": "IST",
@@ -55,8 +59,9 @@
       2023,
       2024
     ],
+    "mode": "wos_replica",
     "papers_in_window": 400,
-    "citations_in_year": 2219,
-    "impact_factor": 5.5475
+    "citations_in_year": 1970,
+    "impact_factor": 4.925
   }
 ]
