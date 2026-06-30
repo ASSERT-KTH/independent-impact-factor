@@ -1,6 +1,6 @@
-# Open Impact Factor for CS Journals
+# Open Impact Factor
 
-Computes an open impact factor for a journal using
+Computes an open impact factor for any journal indexed by
 the [Semantic Scholar](https://www.semanticscholar.org/) API.
 
 Our research systems — funding allocation, hiring decisions, tenure evaluation, venue rankings — must not be steered by proprietary data, closed algorithms, or opaque commercial products. When the metrics that shape academic careers and institutional priorities are locked behind paywalls or black boxes, the scientific community loses the ability to scrutinize, reproduce, or challenge them. This repository — Open Impact Factor — exists as a principled alternative: all data sources, computation logic, and results are fully open and reproducible.
